@@ -7,7 +7,7 @@ import reddit from './reddit';
  * @param {string} subreddit - The name of the subreddit to scrape
  * @returns {Promise} A promise that resolves when the scrape and write operations are complete
  */
-const scrapeSubreddit = async (subreddit: string) => {
+const scrapeSubreddit = async (subreddit: string): Promise<any> => {
   console.log(`Starting scraping r/${subreddit}.`);
 
   // Get the URL of the subreddit page to scrape

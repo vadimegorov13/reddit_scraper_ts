@@ -16,7 +16,7 @@ const self = {
    * @param {string} page_url - The URL of the page to scrape
    * @returns {Promise} A promise that resolves when the browser and page have been created
    */
-  init: async (page_url: string) => {
+  init: async (page_url: string): Promise<any> => {
     // Launch the browser
     self.browser = await puppeteer.launch({
       headless: false,
@@ -102,30 +102,30 @@ const self = {
    * @param {number} n - The number of posts to scrape
    * @returns {Promise<Post[]>} A promise that resolves with an array of scraped posts
    */
-  getPosts: async (n: number) => {
+  getPosts: async (n: number): Promise<Post[]> => {
     // Get the entries from the subreddit page
     const entries: Entry[] = await self.getEntries(n);
     // Array to hold the scraped posts
     const posts: Post[] = [];
 
     // If no entries were found, return an empty array
-    if (!entries) return;
+    if (!entries) return [];
 
     // Iterate over the entries
     for (const entrie of entries) {
       // If the page object is not available, return an empty array
-      if (!self.page) return;
+      if (!self.page) return [];
       // Go to the entry's URL
       await self.page.goto(entrie.url, {waitUntil: 'networkidle0'});
 
       // Get the element containing the post's content
       const element = await self.page.$('div[class="expando"]');
       // If the element is not found, return an empty array
-      if (!element) return;
+      if (!element) return [];
       // Get all the paragraphs within the element
       const paragraphs = await element.$$('p');
       // If no paragraphs were found, return an empty array
-      if (!paragraphs) return;
+      if (!paragraphs) return [];
       // Extract the content of the paragraphs
       const paragraphsContent = await Promise.all(
         paragraphs.map(p => p.evaluate(node => node.innerText))

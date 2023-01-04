@@ -33,7 +33,7 @@ export const getPageUrl = (
   subreddit: string,
   category: number,
   time?: number
-) => {
+): string => {
   // If the category is "top" and a time period is specified, use the "top" endpoint with the specified time period
   if (category === 2 && time !== undefined) {
     return `https://old.reddit.com/r/${subreddit}/top/?sort=top&t=${TimePeriod[time]}`;
